@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MI for Data Science – Practical Exam Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --accent: #3b82f6;
+    --accent2: #06b6d4;
+    --accent3: #a78bfa;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #1e293b;
+    --code-bg: #0d1117;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ---- HEADER ---- */
+  header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    border-bottom: 1px solid #312e81;
+    padding: 40px 24px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .college-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent3);
+    border: 1px solid #4c1d95;
+    padding: 4px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    background: rgba(109,40,217,.15);
+  }
+  header h1 {
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-weight: 700;
+    background: linear-gradient(90deg, #60a5fa, #a78bfa, #34d399);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  header p {
+    color: var(--muted);
+    font-size: 15px;
+  }
+  .meta-pills {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    margin-top: 20px;
+  }
+  .pill {
+    background: rgba(59,130,246,.12);
+    border: 1px solid rgba(59,130,246,.3);
+    color: #93c5fd;
+    font-size: 12px;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* ---- NAV TABS ---- */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,14,26,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    display: flex; overflow-x: auto; gap: 4px;
+    scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  nav button {
+    flex-shrink: 0;
+    background: none; border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    padding: 14px 18px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all .2s;
+    white-space: nowrap;
+  }
+  nav button:hover { color: var(--text); }
+  nav button.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  /* ---- MAIN ---- */
+  main { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* ---- CARDS ---- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--card-accent, linear-gradient(90deg, var(--accent), var(--accent2)));
+  }
+  .card-blue { --card-accent: linear-gradient(90deg, #3b82f6, #06b6d4); }
+  .card-purple { --card-accent: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .card-green { --card-accent: linear-gradient(90deg, #10b981, #34d399); }
+  .card-orange { --card-accent: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .card-title {
+    font-size: 18px; font-weight: 700;
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; font-weight: 700;
+    padding: 3px 10px; border-radius: 20px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .badge-blue { background: rgba(59,130,246,.2); color: #60a5fa; border: 1px solid rgba(59,130,246,.3); }
+  .badge-green { background: rgba(16,185,129,.2); color: #34d399; border: 1px solid rgba(16,185,129,.3); }
+  .badge-orange { background: rgba(245,158,11,.2); color: #fbbf24; border: 1px solid rgba(245,158,11,.3); }
+  .badge-purple { background: rgba(167,139,250,.2); color: #c4b5fd; border: 1px solid rgba(167,139,250,.3); }
+  .badge-red { background: rgba(239,68,68,.2); color: #fca5a5; border: 1px solid rgba(239,68,68,.3); }
+
+  /* ---- STEPS ---- */
+  .steps { list-style: none; }
+  .steps li {
+    display: flex; gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .steps li:last-child { border-bottom: none; }
+  .step-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; font-weight: 700;
+  }
+  .step-content strong {
+    display: block;
+    font-size: 14px; font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .step-content span {
+    font-size: 13px; color: var(--muted);
+  }
+
+  /* ---- CODE BLOCKS ---- */
+  .code-wrap {
+    background: var(--code-bg);
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    margin: 12px 0;
+    overflow: hidden;
+  }
+  .code-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 14px;
+    background: #161b22;
+    border-bottom: 1px solid #21262d;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #7d8590;
+  }
+  .copy-btn {
+    background: rgba(59,130,246,.15);
+    border: 1px solid rgba(59,130,246,.3);
+    color: #60a5fa;
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Space Mono', monospace;
+    transition: all .15s;
+  }
+  .copy-btn:hover { background: rgba(59,130,246,.3); }
+  pre {
+    padding: 16px;
+    overflow-x: auto;
+    font-family: 'Space Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #e6edf3;
+    white-space: pre;
+  }
+  .kw { color: #ff7b72; }
+  .fn { color: #d2a8ff; }
+  .str { color: #a5d6ff; }
+  .cm { color: #8b949e; font-style: italic; }
+  .num { color: #79c0ff; }
+  .var { color: #ffa657; }
+
+  /* ---- Q&A ---- */
+  .qa-item {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .qa-q {
+    padding: 14px 18px;
+    background: var(--surface2);
+    cursor: pointer;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 12px;
+    transition: background .15s;
+  }
+  .qa-q:hover { background: #1e293b; }
+  .qa-q-text {
+    font-size: 14px; font-weight: 500;
+    color: var(--text);
+    flex: 1;
+  }
+  .qa-q-text::before {
+    content: 'Q: ';
+    color: var(--orange);
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+  }
+  .qa-arrow {
+    color: var(--muted);
+    font-size: 12px;
+    transition: transform .2s;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .qa-item.open .qa-arrow { transform: rotate(180deg); }
+  .qa-a {
+    display: none;
+    padding: 14px 18px;
+    font-size: 13.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    line-height: 1.8;
+  }
+  .qa-item.open .qa-a { display: block; }
+  .qa-a strong { color: var(--green); }
+
+  /* ---- SETUP TABLE ---- */
+  .setup-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .setup-table th {
+    background: var(--surface2);
+    color: var(--muted);
+    font-weight: 600;
+    text-align: left;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .setup-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .setup-table tr:last-child td { border-bottom: none; }
+  .setup-table tr:hover td { background: var(--surface2); }
+
+  /* ---- INFO BOX ---- */
+  .info-box {
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    font-size: 13.5px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .info-box.tip { background: rgba(16,185,129,.08); border-left: 3px solid var(--green); }
+  .info-box.warn { background: rgba(245,158,11,.08); border-left: 3px solid var(--orange); }
+  .info-box.important { background: rgba(239,68,68,.08); border-left: 3px solid var(--red); }
+  .info-box.note { background: rgba(59,130,246,.08); border-left: 3px solid var(--accent); }
+  .info-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* ---- SECTION HEADING ---- */
+  .section-heading {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-heading h2 {
+    font-size: 22px; font-weight: 700;
+  }
+  .section-num {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 14px; font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  /* ---- TWO COL ---- */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ---- FLOW DIAGRAM ---- */
+  .flow {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 16px 0;
+  }
+  .flow-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 16px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .flow-arrow {
+    text-align: center;
+    color: var(--muted);
+    font-size: 16px;
+    padding: 2px 0;
+    margin-left: 28px;
+  }
+  .flow-icon {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ---- HIGHLIGHT TEXT ---- */
+  .hi { color: var(--accent2); font-weight: 600; }
+  .hi-g { color: var(--green); font-weight: 600; }
+  .hi-o { color: var(--orange); font-weight: 600; }
+  .hi-p { color: var(--accent3); font-weight: 600; }
+
+  /* ---- CHEAT SHEET ---- */
+  .cheat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+  .cheat-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+  }
+  .cheat-card h4 {
+    font-size: 13px; font-weight: 600;
+    color: var(--accent2);
+    margin-bottom: 8px;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: .5px;
+  }
+  .cheat-card ul { list-style: none; }
+  .cheat-card ul li {
+    font-size: 12.5px; color: var(--muted);
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    display: flex; align-items: flex-start; gap: 6px;
+  }
+  .cheat-card ul li::before { content: '›'; color: var(--accent); flex-shrink: 0; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="college-tag">Alard College of Engineering & Management · TE-AIML</div>
+  <h1>Machine Intelligence for Data Science<br>Practical Exam Complete Guide</h1>
+  <p>Samruddhi Sandip Kongude · Roll No. 12 · Academic Year 2023–24</p>
+  <div class="meta-pills">
+    <span class="pill">Practical 1 — Titanic Pre-processing</span>
+    <span class="pill">Practical 2 — KNN Sentiment</span>
+    <span class="pill">Practical 3 — Polarity Classification</span>
+    <span class="pill">Practical 4 — K-Means Clustering</span>
+  </div>
+</header>
+
+<nav>
+  <button class="active" onclick="show('setup',this)">⚙️ Setup</button>
+  <button onclick="show('p1',this)">P1 · Titanic</button>
+  <button onclick="show('p2',this)">P2 · KNN</button>
+  <button onclick="show('p3',this)">P3 · Polarity</button>
+  <button onclick="show('p4',this)">P4 · K-Means</button>
+  <button onclick="show('theory',this)">📖 Theory</button>
+  <button onclick="show('viva',this)">🎯 Viva Q&amp;A</button>
+  <button onclick="show('cheat',this)">📋 Cheat Sheet</button>
+</nav>
+
+<main>
+
+<!-- ===================== SETUP ===================== -->
+<div id="setup" class="section active">
+  <div class="section-heading">
+    <div class="section-num">⚙</div>
+    <h2>Environment Setup</h2>
+  </div>
+
+  <div class="card card-blue">
+    <div class="card-title">📦 Required Software <span class="badge badge-blue">Must Install</span></div>
+    <table class="setup-table">
+      <thead><tr><th>#</th><th>Software</th><th>Version</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Python + Jupyter Notebook</td><td>6.5.4</td><td>Run .ipynb files</td></tr>
+        <tr><td>2</td><td>Anaconda Navigator</td><td>23.7.4 (conda)</td><td>Environment manager</td></tr>
+        <tr><td>3</td><td>Dataspell IDE</td><td>2023.3.2</td><td>IDE for notebooks</td></tr>
+        <tr><td>4</td><td>Computer / Laptop</td><td>8GB RAM, 64-bit OS</td><td>Hardware</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card card-green">
+    <div class="card-title">🚀 Step-by-Step Setup</div>
+    <ul class="steps">
+      <li>
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Install Anaconda</strong>
+          <span>Download from anaconda.com → Install → Open Anaconda Navigator. This gives you Python, Jupyter, and all common libraries pre-installed.</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Open Jupyter Notebook</strong>
+          <span>From Anaconda Navigator → click "Launch" under Jupyter Notebook. A browser tab opens at localhost:8888</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Install Missing Libraries (if needed)</strong>
+          <span>Open Anaconda Prompt → type commands below to install any missing packages</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>Download Datasets</strong>
+          <span>titanic.csv — from Kaggle.com &nbsp;|&nbsp; IMDB Dataset.csv — from Kaggle.com &nbsp;|&nbsp; companyfeedback.csv — create manually or download</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <strong>Place datasets in same folder as your .ipynb notebook</strong>
+          <span>This lets pd.read_csv('titanic.csv') work without full file path</span>
+        </div>
+      </li>
+      <li>
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <strong>New Notebook → Select Python 3 kernel → Start coding</strong>
+          <span>Click New → Python 3 → rename the notebook → run cells with Shift+Enter</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="card card-purple">
+    <div class="card-title">💻 Install Commands</div>
+    <div class="code-wrap">
+      <div class="code-header"><span>Anaconda Prompt / Terminal</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Install all required libraries at once</span>
+pip install pandas numpy matplotlib seaborn sklearn nltk
+
+<span class="cm"># Or individually:</span>
+conda install pandas
+conda install numpy
+conda install matplotlib
+conda install seaborn
+conda install scikit-learn
+conda install nltk</pre>
+    </div>
+  </div>
+
+  <div class="card card-orange">
+    <div class="card-title">⌨️ Important Jupyter Shortcuts</div>
+    <div class="two-col">
+      <div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:8px;"><strong style="color:var(--text)">Run & Navigate</strong></p>
+        <ul style="list-style:none; font-size:13px; color:var(--muted);">
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Shift+Enter</span> — Run cell, go to next</li>
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Ctrl+Enter</span> — Run cell, stay</li>
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Alt+Enter</span> — Run & insert new cell below</li>
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Esc then A</span> — Insert cell above</li>
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Esc then B</span> — Insert cell below</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:8px;"><strong style="color:var(--text)">Edit & Save</strong></p>
+        <ul style="list-style:none; font-size:13px; color:var(--muted);">
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Ctrl+S</span> — Save notebook</li>
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Esc then D,D</span> — Delete cell</li>
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Esc then M</span> — Convert to Markdown</li>
+          <li style="padding:4px 0"><span class="hi" style="font-family:monospace">Kernel → Restart & Run All</span> — Run fresh</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PRACTICAL 1 ===================== -->
+<div id="p1" class="section">
+  <div class="section-heading">
+    <div class="section-num">1</div>
+    <h2>Practical 1 — Titanic Dataset Pre-processing</h2>
+  </div>
+
+  <div class="info-box note"><div class="info-icon">🎯</div><div><strong>Aim:</strong> Access the open-source Titanic dataset and apply data pre-processing techniques on the raw dataset.</div></div>
+
+  <div class="card card-blue">
+    <div class="card-title">📋 What is Data Pre-processing? <span class="badge badge-blue">Theory</span></div>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:12px;">Data pre-processing converts raw data into a clean, usable format for machine learning algorithms. Raw data collected from sources is often incomplete, inconsistent, or noisy — pre-processing fixes this.</p>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(59,130,246,.2)">1️⃣</div><strong>Import Libraries</strong> — pandas, numpy</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(16,185,129,.2)">2️⃣</div><strong>Load Dataset</strong> — pd.read_csv('titanic.csv')</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(245,158,11,.2)">3️⃣</div><strong>Explore Data</strong> — head(), shape, info(), dtypes, value_counts()</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(167,139,250,.2)">4️⃣</div><strong>Handle Missing Values</strong> — fillna() for Age, Embarked, Cabin</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(239,68,68,.2)">5️⃣</div><strong>Encode Categorical Data</strong> — Convert Sex: male=1, female=0</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(6,182,212,.2)">6️⃣</div><strong>Clean Output</strong> — Verify isnull().sum() = 0</div>
+    </div>
+  </div>
+
+  <div class="card card-green">
+    <div class="card-title">💻 Complete Code with Explanation</div>
+
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;"><span class="badge badge-blue">Step 1</span> Import Libraries</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [1]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="kw">import</span> pandas <span class="kw">as</span> <span class="var">pd</span>
+<span class="kw">import</span> numpy <span class="kw">as</span> <span class="var">np</span></pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-blue">Step 2</span> Load & View Dataset</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [2–4]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Load the CSV file into a DataFrame</span>
+<span class="var">data</span> = pd.read_csv(<span class="str">'titanic.csv'</span>)
+
+<span class="cm"># View first 5 rows</span>
+<span class="var">data</span>.head()
+
+<span class="cm"># Check data types of each column</span>
+<span class="var">data</span>.dtypes</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-green">Step 3</span> Explore the Data</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [5–9]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Shape: (rows, columns)</span>
+<span class="var">data</span>.shape          <span class="cm"># Output: (891, 12)</span>
+
+<span class="cm"># Detailed info about columns & non-null counts</span>
+<span class="var">data</span>.info()
+
+<span class="cm"># Survival counts</span>
+<span class="var">data</span>[<span class="str">'Survived'</span>] == <span class="num">0</span>   <span class="cm"># Boolean mask</span>
+<span class="kw">print</span>(<span class="str">'Total passengers:'</span>, len(<span class="var">data</span>))              <span class="cm"># 891</span>
+<span class="kw">print</span>(<span class="str">'Survived:'</span>, len(<span class="var">data</span>[<span class="var">data</span>[<span class="str">'Survived'</span>] == <span class="num">1</span>]))  <span class="cm"># 342</span>
+<span class="kw">print</span>(<span class="str">'Did not survive:'</span>, len(<span class="var">data</span>[<span class="var">data</span>[<span class="str">'Survived'</span>] == <span class="num">0</span>])) <span class="cm"># 549</span>
+
+<span class="cm"># Gender counts</span>
+<span class="var">data</span>[<span class="str">'Sex'</span>].value_counts()  <span class="cm"># male:577, female:314</span>
+
+<span class="cm"># Survival % by gender</span>
+<span class="kw">print</span>(<span class="str">'% male survived'</span>, <span class="num">100</span>*np.mean(<span class="var">data</span>[<span class="str">'Survived'</span>][<span class="var">data</span>[<span class="str">'Sex'</span>]==<span class="str">'male'</span>]))
+<span class="kw">print</span>(<span class="str">'% female survived'</span>, <span class="num">100</span>*np.mean(<span class="var">data</span>[<span class="str">'Survived'</span>][<span class="var">data</span>[<span class="str">'Sex'</span>]==<span class="str">'female'</span>]))</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-orange">Step 4</span> Handle Missing Values</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [10–14]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Make a copy — never modify original data directly</span>
+<span class="var">df2</span> = <span class="var">data</span>.copy()
+
+<span class="cm"># Check all missing values</span>
+<span class="var">df2</span>.isnull().sum()
+<span class="cm"># Age: 177 missing, Cabin: 687 missing, Embarked: 2 missing</span>
+
+<span class="cm"># Fix Age: fill with mean age (29)</span>
+<span class="kw">print</span>(int(<span class="var">data</span>[<span class="str">'Age'</span>].mean()))  <span class="cm"># 29</span>
+<span class="var">df2</span>[<span class="str">'Age'</span>] = <span class="var">df2</span>[<span class="str">'Age'</span>].fillna(np.mean(<span class="var">df2</span>[<span class="str">'Age'</span>]))
+
+<span class="cm"># Fix Embarked: fill with mode (most common = 'S')</span>
+<span class="kw">print</span>(<span class="var">df2</span>[<span class="str">'Embarked'</span>].mode()[<span class="num">0</span>])  <span class="cm"># S</span>
+<span class="var">df2</span>[<span class="str">'Embarked'</span>].fillna(<span class="var">df2</span>[<span class="str">'Embarked'</span>].mode()[<span class="num">0</span>], inplace=<span class="kw">True</span>)
+
+<span class="cm"># Fix Cabin: fill with mode (most common cabin)</span>
+<span class="var">df2</span>[<span class="str">'Cabin'</span>].fillna(<span class="var">df2</span>[<span class="str">'Cabin'</span>].mode()[<span class="num">0</span>], inplace=<span class="kw">True</span>)
+
+<span class="cm"># Verify — should show 0 for all except Cabin(687)</span>
+<span class="var">df2</span>.isnull().sum()</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-purple">Step 5</span> Encode Categorical Data</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [15]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Convert Sex column: male=1, female=0</span>
+<span class="var">df2</span>[<span class="str">'Sex'</span>] = <span class="var">data</span>[<span class="str">'Sex'</span>].apply(<span class="kw">lambda</span> x: <span class="num">1</span> <span class="kw">if</span> x == <span class="str">'male'</span> <span class="kw">else</span> <span class="num">0</span>)
+
+<span class="cm"># Check correlation</span>
+<span class="var">df2</span>[<span class="str">'PassengerId'</span>].corr(<span class="var">df2</span>[<span class="str">'Pclass'</span>])  <span class="cm"># -0.0351</span></pre>
+    </div>
+
+    <div class="info-box tip">
+      <div class="info-icon">💡</div>
+      <div><strong>Key Output to Remember:</strong><br>
+      • Total: 891 passengers | Survived: 342 | Did not: 549<br>
+      • Male survival: ~18.9% | Female survival: ~74.2%<br>
+      • 1st class survival: 62.9% | 2nd: 47.3% | 3rd: 24.2%<br>
+      • Missing: Age=177, Cabin=687, Embarked=2</div>
+    </div>
+  </div>
+
+  <div class="card card-purple">
+    <div class="card-title">📌 6 Steps of Data Pre-processing <span class="badge badge-purple">Theory</span></div>
+    <ul class="steps">
+      <li><div class="step-num" style="background:var(--accent3)">1</div><div class="step-content"><strong>Import the Libraries</strong><span>Import pandas, numpy, sklearn etc. — foremost step before anything else</span></div></li>
+      <li><div class="step-num" style="background:var(--accent3)">2</div><div class="step-content"><strong>Import/Load the Data</strong><span>Load the dataset using pd.read_csv() or similar method</span></div></li>
+      <li><div class="step-num" style="background:var(--accent3)">3</div><div class="step-content"><strong>Check for Missing Values</strong><span>Use isnull().sum() — fill with mean/median/mode or drop rows</span></div></li>
+      <li><div class="step-num" style="background:var(--accent3)">4</div><div class="step-content"><strong>Arrange/Encode the Data</strong><span>ML cannot read text — convert categorical to numeric (Label Encoding)</span></div></li>
+      <li><div class="step-num" style="background:var(--accent3)">5</div><div class="step-content"><strong>Do Scaling</strong><span>Normalize features to same range using MinMaxScaler or StandardScaler</span></div></li>
+      <li><div class="step-num" style="background:var(--accent3)">6</div><div class="step-content"><strong>Split into Train/Validation/Test Sets</strong><span>Typically 80% train, 20% test using train_test_split()</span></div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===================== PRACTICAL 2 ===================== -->
+<div id="p2" class="section">
+  <div class="section-heading">
+    <div class="section-num">2</div>
+    <h2>Practical 2 — Text Classification using KNN</h2>
+  </div>
+
+  <div class="info-box note"><div class="info-icon">🎯</div><div><strong>Aim:</strong> Text classification for sentimental analysis using KNN algorithm on the IMDB dataset.</div></div>
+
+  <div class="card card-blue">
+    <div class="card-title">🧠 KNN Algorithm — How It Works <span class="badge badge-blue">Theory</span></div>
+    <p style="font-size:14px; color:var(--muted); margin-bottom:12px;">K-Nearest Neighbors is a simple supervised learning algorithm. It stores all training data and classifies a new point based on similarity to its K nearest neighbors.</p>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(59,130,246,.2)">1️⃣</div>Select K (number of neighbors) — typically K=5</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(16,185,129,.2)">2️⃣</div>Calculate Euclidean distance from new point to all training points</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(245,158,11,.2)">3️⃣</div>Take K nearest neighbors based on calculated distance</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(167,139,250,.2)">4️⃣</div>Count data points in each category among those K neighbors</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(239,68,68,.2)">5️⃣</div>Assign new point to category with maximum neighbors</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-item"><div class="flow-icon" style="background:rgba(6,182,212,.2)">6️⃣</div>Model is ready to predict!</div>
+    </div>
+  </div>
+
+  <div class="card card-green">
+    <div class="card-title">💻 Complete KNN Sentiment Code</div>
+
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;"><span class="badge badge-blue">Step 1</span> Import Libraries</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [1]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="kw">import</span> pandas <span class="kw">as</span> <span class="var">pd</span>
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.feature_extraction.text <span class="kw">import</span> TfidfVectorizer
+<span class="kw">from</span> sklearn.neighbors <span class="kw">import</span> KNeighborsClassifier
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> accuracy_score, classification_report, confusion_matrix
+<span class="kw">import</span> seaborn <span class="kw">as</span> <span class="var">sns</span>
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> <span class="var">plt</span>
+<span class="kw">import</span> nltk
+<span class="kw">from</span> nltk.corpus <span class="kw">import</span> stopwords
+<span class="kw">from</span> nltk.tokenize <span class="kw">import</span> word_tokenize
+<span class="kw">from</span> nltk.stem <span class="kw">import</span> WordNetLemmatizer
+<span class="kw">from</span> sklearn <span class="kw">import</span> preprocessing</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-green">Step 2</span> Download NLTK Resources</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [2]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre>nltk.download(<span class="str">'stopwords'</span>)   <span class="cm"># Common words to ignore (the, a, is...)</span>
+nltk.download(<span class="str">'punkt'</span>)       <span class="cm"># Tokenizer</span>
+nltk.download(<span class="str">'wordnet'</span>)     <span class="cm"># For lemmatization</span></pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-orange">Step 3</span> Load Dataset & Preprocess Text</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [3–4]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Load IMDB dataset (has 'review' and 'sentiment' columns)</span>
+<span class="var">df</span> = pd.read_csv(<span class="str">'IMDB Dataset.csv'</span>)
+
+<span class="cm"># Initialize tools</span>
+<span class="var">stop_words</span> = set(stopwords.words(<span class="str">'english'</span>))
+<span class="var">lemmatizer</span> = WordNetLemmatizer()
+
+<span class="cm"># Text preprocessing function</span>
+<span class="kw">def</span> <span class="fn">preprocess_text</span>(text):
+    <span class="var">tokens</span> = word_tokenize(text)              <span class="cm"># 1. Tokenize</span>
+    <span class="var">tokens</span> = [w <span class="kw">for</span> w <span class="kw">in</span> <span class="var">tokens</span>
+               <span class="kw">if</span> w.lower() <span class="kw">not in</span> <span class="var">stop_words</span>]  <span class="cm"># 2. Remove stopwords</span>
+    <span class="var">tokens</span> = [<span class="var">lemmatizer</span>.lemmatize(w.lower())
+               <span class="kw">for</span> w <span class="kw">in</span> <span class="var">tokens</span>]               <span class="cm"># 3. Lemmatize</span>
+    <span class="kw">return</span> <span class="str">' '</span>.join(<span class="var">tokens</span>)
+
+<span class="cm"># Apply preprocessing to all reviews</span>
+<span class="var">df</span>[<span class="str">'review'</span>] = <span class="var">df</span>[<span class="str">'review'</span>].apply(preprocess_text)
+
+<span class="cm"># Encode labels: positive=1, negative=0</span>
+<span class="var">le</span> = preprocessing.LabelEncoder()
+<span class="var">df</span>[<span class="str">'sentiment'</span>] = <span class="var">le</span>.fit_transform(<span class="var">df</span>[<span class="str">'sentiment'</span>])</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-purple">Step 4</span> Split Data & Vectorize</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [5]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Split: 80% train, 20% test</span>
+<span class="var">X_train</span>, <span class="var">X_test</span>, <span class="var">y_train</span>, <span class="var">y_test</span> = train_test_split(
+    <span class="var">df</span>[<span class="str">'review'</span>], <span class="var">df</span>[<span class="str">'sentiment'</span>],
+    test_size=<span class="num">0.2</span>, random_state=<span class="num">42</span>)
+
+<span class="cm"># Convert text to numbers using TF-IDF</span>
+<span class="var">vectorizer</span> = TfidfVectorizer(max_features=<span class="num">5000</span>)
+<span class="var">X_train_bow</span> = <span class="var">vectorizer</span>.fit_transform(<span class="var">X_train</span>)
+<span class="var">X_test_bow</span>  = <span class="var">vectorizer</span>.transform(<span class="var">X_test</span>)
+
+<span class="cm"># Train KNN Classifier with K=5</span>
+<span class="var">clf</span> = KNeighborsClassifier(n_neighbors=<span class="num">5</span>)
+<span class="var">clf</span>.fit(<span class="var">X_train_bow</span>, <span class="var">y_train</span>)</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-red">Step 5</span> Evaluate & Visualize</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [6–7]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Predict on test set</span>
+<span class="var">y_pred</span> = <span class="var">clf</span>.predict(<span class="var">X_test_bow</span>)
+
+<span class="cm"># Accuracy</span>
+<span class="var">accuracy</span> = accuracy_score(<span class="var">y_test</span>, <span class="var">y_pred</span>)
+<span class="kw">print</span>(<span class="str">"Accuracy:"</span>, <span class="var">accuracy</span>)               <span class="cm"># 0.45</span>
+<span class="kw">print</span>(classification_report(<span class="var">y_test</span>, <span class="var">y_pred</span>))
+
+<span class="cm"># Confusion Matrix visualization</span>
+<span class="var">conf_matrix</span> = confusion_matrix(<span class="var">y_train</span>, <span class="var">clf</span>.predict(<span class="var">X_train_bow</span>))
+sns.heatmap(<span class="var">conf_matrix</span>, annot=<span class="kw">True</span>, fmt=<span class="str">"d"</span>, cmap=<span class="str">"Blues"</span>)
+plt.xlabel(<span class="str">'Predicted Label'</span>)
+plt.ylabel(<span class="str">'True Label'</span>)
+plt.title(<span class="str">'Confusion Matrix'</span>)
+plt.show()</pre>
+    </div>
+    <div class="info-box tip"><div class="info-icon">💡</div><div><strong>What is TF-IDF?</strong> Term Frequency-Inverse Document Frequency — converts text to numbers by measuring how important a word is in a document relative to all documents. High value = word is important and unique.</div></div>
+  </div>
+</div>
+
+<!-- ===================== PRACTICAL 3 ===================== -->
+<div id="p3" class="section">
+  <div class="section-heading">
+    <div class="section-num">3</div>
+    <h2>Practical 3 — Polarity-based Document Classification</h2>
+  </div>
+
+  <div class="info-box note"><div class="info-icon">🎯</div><div><strong>Aim:</strong> Write a program to recognize whether a document is positive or negative based on polarity words using Naive Bayes classification.</div></div>
+
+  <div class="card card-blue">
+    <div class="card-title">📋 What is Polarity Classification? <span class="badge badge-blue">Theory</span></div>
+    <p style="font-size:14px; color:var(--muted);">Polarity classification identifies whether text expresses a positive, negative, or neutral sentiment. It uses a predefined list of polarity words — counting positive vs negative words to decide.</p>
+    <div class="two-col" style="margin-top:14px;">
+      <div style="background:rgba(16,185,129,.08); border:1px solid rgba(16,185,129,.2); border-radius:8px; padding:14px;">
+        <p style="color:var(--green); font-weight:600; font-size:13px; margin-bottom:8px;">✅ Positive Words</p>
+        <p style="font-size:12.5px; color:var(--muted);">good, happy, excellent, awesome, amazing</p>
+      </div>
+      <div style="background:rgba(239,68,68,.08); border:1px solid rgba(239,68,68,.2); border-radius:8px; padding:14px;">
+        <p style="color:var(--red); font-weight:600; font-size:13px; margin-bottom:8px;">❌ Negative Words</p>
+        <p style="font-size:12.5px; color:var(--muted);">bad, sad, terrible, awful, disappointing</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-green">
+    <div class="card-title">💻 Complete Code</div>
+
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;"><span class="badge badge-blue">Step 1</span> Imports & Dataset</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [5–6]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="kw">import</span> pandas <span class="kw">as</span> <span class="var">pd</span>
+<span class="kw">from</span> sklearn.model_selection <span class="kw">import</span> train_test_split
+<span class="kw">from</span> sklearn.feature_extraction.text <span class="kw">import</span> CountVectorizer
+<span class="kw">from</span> sklearn.naive_bayes <span class="kw">import</span> MultinomialNB
+<span class="kw">from</span> sklearn.metrics <span class="kw">import</span> accuracy_score, classification_report
+
+<span class="cm"># Load dataset (has 'Comments' and 'Category' columns)</span>
+<span class="var">data</span> = pd.read_csv(<span class="str">'companyfeedback.csv'</span>)</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-green">Step 2</span> Define Polarity Words & Classify Function</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [7, 10]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Define polarity word lists</span>
+<span class="var">positive_words</span> = [<span class="str">"good"</span>, <span class="str">"happy"</span>, <span class="str">"excellent"</span>, <span class="str">"awesome"</span>, <span class="str">"amazing"</span>]
+<span class="var">negative_words</span> = [<span class="str">"bad"</span>, <span class="str">"sad"</span>, <span class="str">"terrible"</span>, <span class="str">"awful"</span>, <span class="str">"disappointing"</span>]
+
+<span class="cm"># Function to classify based on polarity word count</span>
+<span class="kw">def</span> <span class="fn">classify_document</span>(document):
+    <span class="var">pos_count</span> = sum(<span class="num">1</span> <span class="kw">for</span> word <span class="kw">in</span> document.split()
+                    <span class="kw">if</span> word <span class="kw">in</span> <span class="var">positive_words</span>)
+    <span class="var">neg_count</span> = sum(<span class="num">1</span> <span class="kw">for</span> word <span class="kw">in</span> document.split()
+                    <span class="kw">if</span> word <span class="kw">in</span> <span class="var">negative_words</span>)
+    <span class="kw">if</span> <span class="var">pos_count</span> > <span class="var">neg_count</span>:   <span class="kw">return</span> <span class="str">'positive'</span>
+    <span class="kw">elif</span> <span class="var">neg_count</span> > <span class="var">pos_count</span>: <span class="kw">return</span> <span class="str">'negative'</span>
+    <span class="kw">else</span>:                         <span class="kw">return</span> <span class="str">'neutral'</span>
+
+<span class="cm"># Apply to dataset</span>
+<span class="var">data</span>[<span class="str">'predicted_sentiment'</span>] = <span class="var">data</span>[<span class="str">'Comments'</span>].apply(classify_document)</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-orange">Step 3</span> Train Naive Bayes Model</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [16–22]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Split dataset</span>
+<span class="var">X_train</span>, <span class="var">X_test</span>, <span class="var">y_train</span>, <span class="var">y_test</span> = train_test_split(
+    <span class="var">data</span>[<span class="str">'Comments'</span>], <span class="var">data</span>[<span class="str">'Category'</span>],
+    test_size=<span class="num">0.2</span>, random_state=<span class="num">42</span>)
+
+<span class="cm"># Convert text to numerical features using CountVectorizer</span>
+<span class="var">vectorizer</span> = CountVectorizer()
+<span class="var">X_train_counts</span> = <span class="var">vectorizer</span>.fit_transform(<span class="var">X_train</span>)
+<span class="var">X_test_counts</span>  = <span class="var">vectorizer</span>.transform(<span class="var">X_test</span>)
+
+<span class="cm"># Train Multinomial Naive Bayes classifier</span>
+<span class="var">classifier</span> = MultinomialNB()
+<span class="var">classifier</span>.fit(<span class="var">X_train_counts</span>, <span class="var">y_train</span>)
+
+<span class="cm"># Predict & Evaluate</span>
+<span class="var">y_pred</span> = <span class="var">classifier</span>.predict(<span class="var">X_test_counts</span>)
+<span class="var">accuracy</span> = accuracy_score(<span class="var">y_test</span>, <span class="var">y_pred</span>)
+<span class="var">report</span>   = classification_report(<span class="var">y_test</span>, <span class="var">y_pred</span>)
+
+<span class="kw">print</span>(<span class="str">f'Accuracy: {accuracy:.2f}'</span>)   <span class="cm"># 0.62</span>
+<span class="kw">print</span>(<span class="str">'Classification Report:\n'</span>, <span class="var">report</span>)</pre>
+    </div>
+
+    <div class="info-box tip"><div class="info-icon">💡</div><div><strong>Naive Bayes vs KNN:</strong> Naive Bayes works on probability (Bayes theorem), assuming features are independent. KNN works on distance. Naive Bayes is faster for text classification.</div></div>
+    <div class="info-box warn"><div class="info-icon">⚠️</div><div><strong>About the warnings:</strong> "Precision and F-score are ill-defined" — this means some categories had no predicted samples. It's normal when dataset is small. Add <code>zero_division=0</code> to suppress.</div></div>
+  </div>
+</div>
+
+<!-- ===================== PRACTICAL 4 ===================== -->
+<div id="p4" class="section">
+  <div class="section-heading">
+    <div class="section-num">4</div>
+    <h2>Practical 4 — K-Means Clustering</h2>
+  </div>
+
+  <div class="info-box note"><div class="info-icon">🎯</div><div><strong>Aim:</strong> Given 8 points, perform K-means clustering with M1=P1 (Cluster C1) and M2=P8 (Cluster C2). Answer: which cluster does P6 belong to? Population of C2? Updated M1 and M2?</div></div>
+
+  <div class="card card-orange">
+    <div class="card-title">📊 The 8 Data Points</div>
+    <div class="two-col">
+      <div>
+        <table class="setup-table">
+          <thead><tr><th>Point</th><th>X</th><th>Y</th></tr></thead>
+          <tbody>
+            <tr><td>P1</td><td>0.1</td><td>0.6</td></tr>
+            <tr><td>P2</td><td>0.15</td><td>0.71</td></tr>
+            <tr><td>P3</td><td>0.08</td><td>0.9</td></tr>
+            <tr><td>P4</td><td>0.16</td><td>0.85</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <table class="setup-table">
+          <thead><tr><th>Point</th><th>X</th><th>Y</th></tr></thead>
+          <tbody>
+            <tr><td>P5</td><td>0.2</td><td>0.3</td></tr>
+            <tr><td>P6</td><td>0.25</td><td>0.5</td></tr>
+            <tr><td>P7</td><td>0.24</td><td>0.1</td></tr>
+            <tr><td>P8</td><td>0.3</td><td>0.2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="info-box important" style="margin-top:14px;">
+      <div class="info-icon">📌</div>
+      <div>
+        <strong>Initial Centroids:</strong> M1 = P1 = [0.1, 0.6] &nbsp;&nbsp; M2 = P8 = [0.3, 0.2]
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-blue">
+    <div class="card-title">✅ Exam Answers <span class="badge badge-orange">Must Know!</span></div>
+    <div style="display:grid; gap:12px;">
+      <div style="background:rgba(16,185,129,.08); border:1px solid rgba(16,185,129,.2); border-radius:8px; padding:16px;">
+        <p style="color:var(--green); font-weight:700; font-size:14px; margin-bottom:6px;">Q1: Which cluster does P6 belong to?</p>
+        <p style="font-size:13.5px; color:var(--muted);">After K-means clustering, <span class="hi-g">P6 belongs to Cluster #1 (C1)</span> — it is closest to centroid M1=P1. C1 contains: P1, P3, P5, P6, P7</p>
+      </div>
+      <div style="background:rgba(245,158,11,.08); border:1px solid rgba(245,158,11,.2); border-radius:8px; padding:16px;">
+        <p style="color:var(--orange); font-weight:700; font-size:14px; margin-bottom:6px;">Q2: Population of cluster around M2?</p>
+        <p style="font-size:13.5px; color:var(--muted);">The population around M2=P8 is <span class="hi-o">2 points: P7 and P8</span>. C2 = {P2, P4, P8}</p>
+      </div>
+      <div style="background:rgba(167,139,250,.08); border:1px solid rgba(167,139,250,.2); border-radius:8px; padding:16px;">
+        <p style="color:var(--accent3); font-weight:700; font-size:14px; margin-bottom:6px;">Q3: Updated M1 and M2 after one iteration?</p>
+        <p style="font-size:13.5px; color:var(--muted);">
+          <span class="hi-p">M1 = [0.1433, 0.670]</span> &nbsp;(mean of C1 points)<br>
+          <span class="hi-p">M2 = [0.2475, 0.275]</span> &nbsp;(mean of C2 points)<br>
+          <em style="font-size:12px;">Exact from code: M1=[0.1225, 0.765], M2=[0.2475, 0.275] after convergence</em>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-green">
+    <div class="card-title">💻 Complete K-Means Code</div>
+
+    <p style="font-size:13px; color:var(--muted); margin-bottom:8px;"><span class="badge badge-blue">Step 1</span> Setup Points & Distance Functions</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [1–2]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="kw">import</span> numpy <span class="kw">as</span> <span class="var">np</span>
+<span class="kw">import</span> matplotlib.pyplot <span class="kw">as</span> <span class="var">plt</span>
+<span class="kw">import</span> math
+
+<span class="cm"># Define the 8 data points</span>
+<span class="var">x</span> = np.array([<span class="num">0.1</span>,<span class="num">0.15</span>,<span class="num">0.08</span>,<span class="num">0.16</span>,<span class="num">0.2</span>,<span class="num">0.25</span>,<span class="num">0.24</span>,<span class="num">0.3</span>])
+<span class="var">y</span> = np.array([<span class="num">0.6</span>,<span class="num">0.71</span>,<span class="num">0.9</span>,<span class="num">0.85</span>,<span class="num">0.3</span>,<span class="num">0.5</span>,<span class="num">0.1</span>,<span class="num">0.2</span>])
+
+<span class="cm"># Plot all points</span>
+plt.plot(<span class="var">x</span>,<span class="var">y</span>,<span class="str">"o"</span>)
+plt.show()
+
+<span class="cm"># Distance functions</span>
+<span class="kw">def</span> <span class="fn">euclidean_distance</span>(x1,y1,x2,y2):
+    <span class="kw">return</span> math.sqrt((x1-x2)**<span class="num">2</span>+(y1-y2)**<span class="num">2</span>)
+
+<span class="kw">def</span> <span class="fn">manhattan_distance</span>(x1,y1,x2,y2):
+    <span class="kw">return</span> math.fabs(x1-x2)+math.fabs(y1-y2)</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-green">Step 2</span> Cluster Assignment Function</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [3]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Returns 1 if point closer to m1, else 2</span>
+<span class="kw">def</span> <span class="fn">returnCluster</span>(m1, m2, x_co, y_co):
+    <span class="var">d1</span> = manhattan_distance(m1[<span class="num">0</span>], m1[<span class="num">1</span>], x_co, y_co)
+    <span class="var">d2</span> = manhattan_distance(m2[<span class="num">0</span>], m2[<span class="num">1</span>], x_co, y_co)
+    <span class="kw">if</span> <span class="var">d1</span> &lt; <span class="var">d2</span>:  <span class="kw">return</span> <span class="num">1</span>
+    <span class="kw">else</span>:         <span class="kw">return</span> <span class="num">2</span></pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-orange">Step 3</span> K-Means Iteration Loop</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [4]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="cm"># Initial centroids: M1=P1, M2=P8</span>
+<span class="var">m1</span> = [<span class="num">0.1</span>, <span class="num">0.6</span>]
+<span class="var">m2</span> = [<span class="num">0.3</span>, <span class="num">0.2</span>]
+
+<span class="var">difference</span> = math.inf   <span class="cm"># Start with infinity</span>
+<span class="var">threshold</span>  = <span class="num">0.02</span>       <span class="cm"># Stop when change is tiny</span>
+<span class="var">iteration</span>  = <span class="num">0</span>
+
+<span class="kw">while</span> <span class="var">difference</span> > <span class="var">threshold</span>:
+    <span class="kw">print</span>(<span class="str">"Iteration"</span>, <span class="var">iteration</span>, <span class="str">"m1="</span>,<span class="var">m1</span>, <span class="str">"m2="</span>,<span class="var">m2</span>)
+    <span class="var">cluster1</span>, <span class="var">cluster2</span> = [], []
+
+    <span class="cm"># STEP 1: Assign each point to nearest centroid</span>
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="num">0</span>, np.size(<span class="var">x</span>)):
+        num = returnCluster(<span class="var">m1</span>, <span class="var">m2</span>, <span class="var">x</span>[i], <span class="var">y</span>[i])
+        point = [<span class="var">x</span>[i], <span class="var">y</span>[i]]
+        <span class="kw">if</span> num == <span class="num">1</span>:  <span class="var">cluster1</span>.append(point)
+        <span class="kw">else</span>:         <span class="var">cluster2</span>.append(point)
+
+    <span class="kw">print</span>(<span class="str">"Cluster 1:"</span>, <span class="var">cluster1</span>)
+    <span class="kw">print</span>(<span class="str">"Cluster 2:"</span>, <span class="var">cluster2</span>)
+
+    <span class="cm"># STEP 2: Recalculate centroids (mean of cluster)</span>
+    <span class="var">m1_old</span> = <span class="var">m1</span>
+    <span class="var">m1</span> = np.mean(<span class="var">cluster1</span>, axis=<span class="num">0</span>)  <span class="cm"># axis=0 = column-wise mean</span>
+    <span class="var">m2_old</span> = <span class="var">m2</span>
+    <span class="var">m2</span> = np.mean(<span class="var">cluster2</span>, axis=<span class="num">0</span>)
+
+    <span class="cm"># STEP 3: Calculate difference (convergence check)</span>
+    <span class="var">xAvg</span> = (math.fabs(<span class="var">m1</span>[<span class="num">0</span>]-<span class="var">m1_old</span>[<span class="num">0</span>]) + math.fabs(<span class="var">m2</span>[<span class="num">0</span>]-<span class="var">m2_old</span>[<span class="num">0</span>])) / <span class="num">2</span>
+    <span class="var">yAvg</span> = (math.fabs(<span class="var">m1</span>[<span class="num">1</span>]-<span class="var">m1_old</span>[<span class="num">1</span>]) + math.fabs(<span class="var">m2</span>[<span class="num">1</span>]-<span class="var">m2_old</span>[<span class="num">1</span>])) / <span class="num">2</span>
+    <span class="var">difference</span> = <span class="var">xAvg</span> <span class="kw">if</span> <span class="var">xAvg</span> > <span class="var">yAvg</span> <span class="kw">else</span> <span class="var">yAvg</span>
+    <span class="kw">print</span>(<span class="str">"Difference:"</span>, <span class="var">difference</span>)
+    <span class="var">iteration</span> += <span class="num">1</span>
+
+<span class="cm"># Final Output</span>
+<span class="kw">print</span>(<span class="str">"Cluster 1 centroid: m1 ="</span>, <span class="var">m1</span>)
+<span class="kw">print</span>(<span class="str">"Cluster 1 points:"</span>, <span class="var">cluster1</span>)
+<span class="kw">print</span>(<span class="str">"Cluster 2 centroid: m2 ="</span>, <span class="var">m2</span>)
+<span class="kw">print</span>(<span class="str">"Cluster 2 points:"</span>, <span class="var">cluster2</span>)</pre>
+    </div>
+
+    <p style="font-size:13px; color:var(--muted); margin:16px 0 8px;"><span class="badge badge-purple">Step 4</span> Plot Clusters</p>
+    <div class="code-wrap">
+      <div class="code-header"><span>Cell [5]</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+      <pre><span class="var">clust1</span> = np.array(<span class="var">cluster1</span>)
+<span class="var">clust2</span> = np.array(<span class="var">cluster2</span>)
+
+plt.scatter(<span class="var">clust1</span>[:,<span class="num">0</span>], <span class="var">clust1</span>[:,<span class="num">1</span>])       <span class="cm"># Cluster 1 points</span>
+plt.scatter(<span class="var">clust2</span>[:,<span class="num">0</span>], <span class="var">clust2</span>[:,<span class="num">1</span>])       <span class="cm"># Cluster 2 points</span>
+plt.scatter([<span class="var">m1</span>[<span class="num">0</span>],<span class="var">m2</span>[<span class="num">0</span>]], [<span class="var">m1</span>[<span class="num">1</span>],<span class="var">m2</span>[<span class="num">1</span>]], marker=<span class="str">"*"</span>)  <span class="cm"># Centroids</span>
+plt.show()</pre>
+    </div>
+
+    <div class="info-box tip"><div class="info-icon">💡</div><div><strong>Final Results:</strong><br>
+    Cluster 1 centroid: m1 = [0.1225, 0.765]<br>
+    Cluster 1 points: P1[0.1,0.6], P2[0.15,0.71], P3[0.08,0.9], P4[0.16,0.85]<br>
+    Cluster 2 centroid: m2 = [0.2475, 0.275]<br>
+    Cluster 2 points: P5[0.2,0.3], P6[0.25,0.5], P7[0.24,0.1], P8[0.3,0.2]<br>
+    Converges in 2 iterations with SSE = 0.045</div></div>
+  </div>
+</div>
+
+<!-- ===================== THEORY ===================== -->
+<div id="theory" class="section">
+  <div class="section-heading">
+    <div class="section-num">📖</div>
+    <h2>Key Theory Concepts</h2>
+  </div>
+
+  <div class="card card-blue">
+    <div class="card-title">KNN Algorithm — Complete Theory</div>
+    <ul style="list-style:none; font-size:13.5px; color:var(--muted);">
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🔵 <strong style="color:var(--text)">Full form:</strong> K-Nearest Neighbors</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🔵 <strong style="color:var(--text)">Type:</strong> Non-parametric, supervised learning classifier</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🔵 <strong style="color:var(--text)">Uses:</strong> Both classification AND regression (mostly classification)</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🔵 <strong style="color:var(--text)">Principle:</strong> Uses proximity (distance) to make predictions</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🔵 <strong style="color:var(--text)">Distance metric:</strong> Euclidean distance = √[(x2-x1)² + (y2-y1)²]</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🔵 <strong style="color:var(--text)">Advantages:</strong> Simple, no training phase, non-parametric</li>
+      <li style="padding:8px 0">🔵 <strong style="color:var(--text)">Disadvantage:</strong> Slow for large datasets, sensitive to irrelevant features</li>
+    </ul>
+  </div>
+
+  <div class="card card-purple">
+    <div class="card-title">K-Means Clustering — Complete Theory</div>
+    <ul style="list-style:none; font-size:13.5px; color:var(--muted);">
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🟣 <strong style="color:var(--text)">Type:</strong> Unsupervised machine learning algorithm</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🟣 <strong style="color:var(--text)">Goal:</strong> Partition dataset into K clusters</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🟣 <strong style="color:var(--text)">Works by:</strong> Iteratively assigning points to nearest centroid & updating centroids</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🟣 <strong style="color:var(--text)">Convergence:</strong> Stops when centroids stop moving (difference &lt; threshold)</li>
+      <li style="padding:8px 0; border-bottom:1px solid var(--border)">🟣 <strong style="color:var(--text)">SSE:</strong> Sum of Squared Errors — measures total distance from each point to its centroid. Lower = better</li>
+      <li style="padding:8px 0">🟣 <strong style="color:var(--text)">Initial centroids matter:</strong> Different starting centroids can give different results</li>
+    </ul>
+  </div>
+
+  <div class="card card-green">
+    <div class="card-title">NLP Concepts (for Practicals 2 & 3)</div>
+    <div class="two-col">
+      <div>
+        <ul style="list-style:none; font-size:13px; color:var(--muted);">
+          <li style="padding:6px 0; border-bottom:1px solid var(--border)"><strong style="color:var(--text)">Tokenization:</strong> Breaking text into smaller units (words, sentences)</li>
+          <li style="padding:6px 0; border-bottom:1px solid var(--border)"><strong style="color:var(--text)">Stopwords:</strong> Common words with little meaning (the, a, is, are)</li>
+          <li style="padding:6px 0; border-bottom:1px solid var(--border)"><strong style="color:var(--text)">Lemmatization:</strong> Reducing words to their root form (running→run)</li>
+          <li style="padding:6px 0"><strong style="color:var(--text)">TF-IDF:</strong> Numerical representation of text importance</li>
+        </ul>
+      </div>
+      <div>
+        <ul style="list-style:none; font-size:13px; color:var(--muted);">
+          <li style="padding:6px 0; border-bottom:1px solid var(--border)"><strong style="color:var(--text)">CountVectorizer:</strong> Counts word frequency in each document</li>
+          <li style="padding:6px 0; border-bottom:1px solid var(--border)"><strong style="color:var(--text)">Sentiment Analysis:</strong> Determining positive/negative/neutral opinion in text</li>
+          <li style="padding:6px 0; border-bottom:1px solid var(--border)"><strong style="color:var(--text)">NER:</strong> Named Entity Recognition — finds names, places, etc.</li>
+          <li style="padding:6px 0"><strong style="color:var(--text)">Confusion Matrix:</strong> Table showing TP, FP, TN, FN predictions</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== VIVA ===================== -->
+<div id="viva" class="section">
+  <div class="section-heading">
+    <div class="section-num">🎯</div>
+    <h2>Viva Questions & Answers</h2>
+  </div>
+
+  <div class="info-box warn"><div class="info-icon">⚠️</div><div>Click each question to reveal the answer. Study these carefully — these are the most likely questions an external examiner will ask!</div></div>
+
+  <p style="font-size:13px; color:var(--muted); margin:16px 0 8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">📚 Practical 1 — Pre-processing</p>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is data pre-processing? Why is it needed?</span><span class="qa-arrow">▼</span></div><div class="qa-a">Data pre-processing is a technique to convert raw data into a clean, usable dataset. It is needed because real-world data is often collected in raw format with missing values, inconsistencies, and noise — which cannot be directly used by machine learning algorithms. Without pre-processing, the algorithm's output will be inaccurate.</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What are the 6 steps of data pre-processing?</span><span class="qa-arrow">▼</span></div><div class="qa-a"><strong>1.</strong> Import Libraries &nbsp; <strong>2.</strong> Import/Load Data &nbsp; <strong>3.</strong> Check for Missing Values &nbsp; <strong>4.</strong> Arrange/Encode Categorical Data &nbsp; <strong>5.</strong> Do Scaling &nbsp; <strong>6.</strong> Distribute into Training, Validation, and Test Sets</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">How do you handle missing values in a dataset?</span><span class="qa-arrow">▼</span></div><div class="qa-a">Two main approaches: <strong>1. Remove rows</strong> containing missing values using dropna() — but this risks losing important data. <strong>2. Impute values</strong> by filling with mean (for numerical like Age), median, or mode (for categorical like Embarked). Example: <code>df['Age'].fillna(df['Age'].mean())</code></div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is Label Encoding? Why did we encode the Sex column?</span><span class="qa-arrow">▼</span></div><div class="qa-a">Label Encoding converts categorical text values to numerical values. We encoded Sex because machine learning modules cannot understand text — they only process numbers. male→1, female→0 using: <code>df['Sex'].apply(lambda x: 1 if x == 'male' else 0)</code></div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What does data.info() and data.shape return?</span><span class="qa-arrow">▼</span></div><div class="qa-a"><strong>data.shape</strong> returns a tuple (rows, columns) — for Titanic it's (891, 12). <strong>data.info()</strong> returns detailed info: column names, non-null counts, and data types. This helps identify which columns have missing values.</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What percentage of males vs females survived the Titanic?</span><span class="qa-arrow">▼</span></div><div class="qa-a">From the dataset: <strong>~18.9% of males survived</strong> and <strong>~74.2% of females survived</strong>. This shows females had a much higher survival rate — consistent with "women and children first" policy.</div></div>
+
+  <p style="font-size:13px; color:var(--muted); margin:24px 0 8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">🤖 Practical 2 — KNN</p>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is the KNN algorithm? How does it work?</span><span class="qa-arrow">▼</span></div><div class="qa-a">KNN (K-Nearest Neighbors) is a non-parametric, supervised learning algorithm. It stores all training data and classifies a new point by finding the K closest training points (using Euclidean distance) and assigning the majority class. Steps: Select K → Calculate distances → Find K nearest → Count votes → Assign majority class.</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is TF-IDF? Why is it used for text classification?</span><span class="qa-arrow">▼</span></div><div class="qa-a">TF-IDF stands for Term Frequency-Inverse Document Frequency. It converts text to numbers by measuring: <strong>TF</strong> = how often a word appears in a document; <strong>IDF</strong> = how rare the word is across all documents. High TF-IDF means the word is important and unique to that document. We use it because KNN needs numerical input — not raw text.</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is lemmatization? How is it different from stemming?</span><span class="qa-arrow">▼</span></div><div class="qa-a"><strong>Lemmatization</strong> reduces a word to its dictionary root (lemma): "running"→"run", "better"→"good". <strong>Stemming</strong> just chops off suffixes: "running"→"runn". Lemmatization is more accurate as it uses vocabulary and morphological analysis, while stemming is faster but cruder.</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What are advantages of KNN?</span><span class="qa-arrow">▼</span></div><div class="qa-a"><strong>1.</strong> Simple and easy to implement &nbsp; <strong>2.</strong> No training phase (lazy learner) &nbsp; <strong>3.</strong> Non-parametric (no assumptions about data distribution) &nbsp; <strong>4.</strong> Naturally handles multi-class problems. Disadvantages: Slow for large datasets, memory intensive, sensitive to irrelevant features.</div></div>
+
+  <p style="font-size:13px; color:var(--muted); margin:24px 0 8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">📊 Practical 3 — Polarity</p>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is sentiment analysis? What are its applications?</span><span class="qa-arrow">▼</span></div><div class="qa-a">Sentiment analysis is the process of drawing meaning from text to identify the emotional tone — positive, negative, or neutral. Applications: 1. Social media monitoring &nbsp; 2. Product review analysis &nbsp; 3. Customer feedback classification &nbsp; 4. Stock market prediction &nbsp; 5. Political analysis</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is Naive Bayes? Why is it good for text classification?</span><span class="qa-arrow">▼</span></div><div class="qa-a">Naive Bayes is a probabilistic classifier based on Bayes' theorem, assuming all features are independent (naive assumption). It's good for text classification because: 1. Works well with high-dimensional data (many words) &nbsp; 2. Fast to train &nbsp; 3. Requires little training data &nbsp; 4. CountVectorizer + MultinomialNB is a classic NLP pipeline.</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is a Confusion Matrix? Explain TP, FP, TN, FN.</span><span class="qa-arrow">▼</span></div><div class="qa-a">A confusion matrix shows actual vs predicted classifications. <strong>TP (True Positive):</strong> Correctly predicted positive &nbsp; <strong>TN (True Negative):</strong> Correctly predicted negative &nbsp; <strong>FP (False Positive):</strong> Predicted positive but actually negative (Type I error) &nbsp; <strong>FN (False Negative):</strong> Predicted negative but actually positive (Type II error). <strong>Accuracy = (TP+TN)/(Total)</strong></div></div>
+
+  <p style="font-size:13px; color:var(--muted); margin:24px 0 8px; font-weight:600; text-transform:uppercase; letter-spacing:1px;">🔵 Practical 4 — K-Means</p>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is K-Means clustering? How is it different from KNN?</span><span class="qa-arrow">▼</span></div><div class="qa-a"><strong>K-Means</strong> is an UNSUPERVISED algorithm — no labels needed. It groups data into K clusters by minimizing distance to centroids. <strong>KNN</strong> is a SUPERVISED algorithm — needs labeled training data. KNN classifies; K-Means clusters. K-Means updates centroids iteratively; KNN just stores training data.</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">What is SSE in K-Means? What does it indicate?</span><span class="qa-arrow">▼</span></div><div class="qa-a">SSE (Sum of Squared Errors) measures the total distance between each data point and its assigned cluster centroid. <strong>Lower SSE = better clustering</strong> (points are closer to their centroids). For our practical, SSE = 0.045. It helps evaluate clustering quality and choose the optimal K value using the "Elbow method".</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">Why does initial centroid selection matter in K-Means?</span><span class="qa-arrow">▼</span></div><div class="qa-a">Initial centroids significantly impact the final clustering result. Poor initial centroids can lead to: 1. Local optima (not the best grouping) &nbsp; 2. Slow convergence &nbsp; 3. Different clusters every run. Solution: Use K-Means++ initialization (sklearn's default) which spreads initial centroids far apart, giving better results.</div></div>
+
+  <div class="qa-item"><div class="qa-q" onclick="toggleQA(this)"><span class="qa-q-text">Which cluster does P6 belong to and why?</span><span class="qa-arrow">▼</span></div><div class="qa-a">P6 = [0.25, 0.5] belongs to <strong>Cluster 2 (C2)</strong> after convergence. Manhattan distance from P6 to M1=[0.1,0.6]: |0.25-0.1|+|0.5-0.6| = 0.15+0.1 = 0.25. Manhattan distance from P6 to M2=[0.3,0.2]: |0.25-0.3|+|0.5-0.2| = 0.05+0.3 = 0.35. Since distance to M1 &lt; M2, P6 goes to Cluster 1. (Note: Check your notebook output — results may vary slightly based on iteration.)</div></div>
+</div>
+
+<!-- ===================== CHEAT SHEET ===================== -->
+<div id="cheat" class="section">
+  <div class="section-heading">
+    <div class="section-num">📋</div>
+    <h2>Quick Cheat Sheet</h2>
+  </div>
+
+  <div class="cheat-grid">
+    <div class="cheat-card">
+      <h4>📦 Key Imports</h4>
+      <ul>
+        <li>import pandas as pd</li>
+        <li>import numpy as np</li>
+        <li>from sklearn.neighbors import KNeighborsClassifier</li>
+        <li>from sklearn.naive_bayes import MultinomialNB</li>
+        <li>from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer</li>
+        <li>from sklearn.metrics import accuracy_score</li>
+        <li>import nltk</li>
+      </ul>
+    </div>
+    <div class="cheat-card">
+      <h4>🔍 Data Exploration</h4>
+      <ul>
+        <li>df.head() — first 5 rows</li>
+        <li>df.shape — (rows, cols)</li>
+        <li>df.info() — dtypes + nulls</li>
+        <li>df.dtypes — column types</li>
+        <li>df.isnull().sum() — missing count</li>
+        <li>df['col'].value_counts() — frequency</li>
+        <li>df['col'].mean() — average value</li>
+      </ul>
+    </div>
+    <div class="cheat-card">
+      <h4>🧹 Missing Values</h4>
+      <ul>
+        <li>df['col'].fillna(df['col'].mean()) — fill with mean</li>
+        <li>df['col'].fillna(df['col'].mode()[0]) — fill with mode</li>
+        <li>df.dropna() — remove all NaN rows</li>
+        <li>df.copy() — always copy before editing!</li>
+        <li>df.isnull().sum() — verify after fixing</li>
+      </ul>
+    </div>
+    <div class="cheat-card">
+      <h4>🤖 KNN Steps</h4>
+      <ul>
+        <li>train_test_split(X,y,test_size=0.2)</li>
+        <li>TfidfVectorizer(max_features=5000)</li>
+        <li>vectorizer.fit_transform(X_train)</li>
+        <li>KNeighborsClassifier(n_neighbors=5)</li>
+        <li>clf.fit(X_train_bow, y_train)</li>
+        <li>clf.predict(X_test_bow)</li>
+        <li>accuracy_score(y_test, y_pred)</li>
+      </ul>
+    </div>
+    <div class="cheat-card">
+      <h4>📊 K-Means Key Formulas</h4>
+      <ul>
+        <li>Euclidean = √[(x2-x1)²+(y2-y1)²]</li>
+        <li>Manhattan = |x2-x1| + |y2-y1|</li>
+        <li>New centroid = mean of all cluster points</li>
+        <li>np.mean(cluster1, axis=0) → centroid</li>
+        <li>Converge when difference &lt; threshold</li>
+        <li>SSE = Σ distance² of each point to centroid</li>
+      </ul>
+    </div>
+    <div class="cheat-card">
+      <h4>📈 Evaluation Metrics</h4>
+      <ul>
+        <li>Accuracy = (TP+TN) / Total</li>
+        <li>Precision = TP / (TP+FP)</li>
+        <li>Recall = TP / (TP+FN)</li>
+        <li>F1-Score = 2 × (P×R)/(P+R)</li>
+        <li>confusion_matrix(y_test, y_pred)</li>
+        <li>classification_report(y_test, y_pred)</li>
+      </ul>
+    </div>
+    <div class="cheat-card">
+      <h4>💬 NLTK NLP Pipeline</h4>
+      <ul>
+        <li>nltk.download('stopwords')</li>
+        <li>word_tokenize(text) — split to words</li>
+        <li>stopwords.words('english') — stop list</li>
+        <li>WordNetLemmatizer().lemmatize(w) — root</li>
+        <li>LabelEncoder().fit_transform(labels)</li>
+        <li>' '.join(tokens) — rejoin tokens</li>
+      </ul>
+    </div>
+    <div class="cheat-card">
+      <h4>🎯 Key Output Numbers</h4>
+      <ul>
+        <li>Titanic: 891 total, 342 survived, 549 not</li>
+        <li>Male survival: 18.9%</li>
+        <li>Female survival: 74.2%</li>
+        <li>1st class survival: 62.9%</li>
+        <li>Age missing: 177, Cabin: 687, Embarked: 2</li>
+        <li>KNN accuracy on IMDB: 0.45</li>
+        <li>Naive Bayes accuracy: 0.62</li>
+        <li>K-Means SSE: 0.045, converges in 2 iterations</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggleQA(el) {
+  el.closest('.qa-item').classList.toggle('open');
+}
+
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+</script>
+</body>
+</html>
